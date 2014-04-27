@@ -3,72 +3,72 @@ package UpperScore;
 import java.util.Vector;
 
 public class Produk {
-    private Barcode barCode;
+    private Barcode barcode;
     private String nama;
     private int harga;
     private Vector<String> tag;
     
     public Produk()
     {
-        barCode = new Barcode();
+        barcode = new Barcode();
         tag = new Vector<String>();
         nama = "";
         harga = 0;
     }
     
-    public Produk(Barcode _barCode, String _nama, int _harga, Vector<String> _tag)
+    public Produk(Barcode _barcode, String _nama, int _harga, Vector<String> _tag)
     {
-        barCode = new Barcode(_barCode.id);
+        barcode = new Barcode(_barcode.id);
         nama = _nama;
         harga = _harga;
         tag = new Vector<String>(_tag);
     }
     
-    public Barcode getBarcode ()
+    public Barcode GetBarcode ()
     {
-        return barCode;
+        return barcode;
     }
     
-    public String getNama()
+    public String GetNama()
     {
         return nama;
     }
     
-    public int getHarga()
+    public int GetHarga()
     {
         return harga;
     }
     
-    public Vector<String> getTag()
+    public Vector<String> GetTag()
     {
         return tag;
     }
     
-    public void setBarCode(Barcode _barCode)
+    public void SetBarcode(Barcode _barcode)
     {
-        barCode.SetId(_barCode.id);
+        barcode.SetId(_barcode.id);
     }
     
-    public void setNama(String _nama)
+    public void SetNama(String _nama)
     {
         nama = _nama;
     }
     
-    public void setHarga(int _harga)
+    public void SetHarga(int _harga)
     {
         harga = _harga;
     }
     
-    public void setTag(Vector<String> _tag)
+    public void SetTag(Vector<String> _tag)
     {
         tag = _tag;
     }
     
-    public void print()
+    public void PrintProduk()
     {
         System.out.println("============================");
         System.out.print("Barcode  : ");
-        barCode.PrintBarcode();
+        barcode.PrintBarcode();
         System.out.println("Nama     : "+nama);
         System.out.println("Harga    : "+harga);
         System.out.println("Tag      : "+tag);

@@ -27,7 +27,7 @@ public class Supermarket {
     
     public void DelProduk(Barcode B){
 	for(Produk P : ListProduk){
-	    if (P.getBarcode() == B)
+	    if (P.GetBarcode() == B)
 		ListProduk.remove(P);
 	} 
     }
@@ -35,7 +35,7 @@ public class Supermarket {
     public boolean IsBCAvailable(Barcode B){
 	boolean Available = false;
 	for(Produk P : ListProduk){
-	    if (P.getBarcode() == B)
+	    if (P.GetBarcode() == B)
 		Available = true;
 	}
 	return Available;
@@ -45,7 +45,7 @@ public class Supermarket {
         
         System.out.println("Nama : "+NamaSP);
 	for(Produk P : ListProduk){
-                P.print();
+                P.PrintProduk();
 		
 	} 
     }
