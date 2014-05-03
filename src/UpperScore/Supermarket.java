@@ -5,69 +5,76 @@ import java.util.List;
 
 public class Supermarket {
 
-	// Attributes
-	private List<Produk> list;
-	private String name;
+    // Attributes
+    public List<Produk> listProduk;
+    public String name;
+    
+    // Constructors
+    Supermarket(){
+    	listProduk = new ArrayList<Produk>();
+    	name =null;
+    }
+    
+    Supermarket(String S){
+	listProduk = new ArrayList<Produk>();
+	name = new String(S);
+    }
+    
+    // Getters and Setters
+    public List<Produk> getList() 
+    {
+        return listProduk;
+    }
 
-	// Constructors
-	public Supermarket() {
-		list = new ArrayList<Produk>();
-		name = "";
+    public String getName() 
+    {
+        return name;
+    }
+
+    public void setList(List<Produk> list) 
+    {
+        listProduk = list;
+    }
+
+    public void setName(String _name) 
+    {
+        name = _name;
+    }
+        
+    // Methods
+    public void addProduk(Produk P){
+	if (!listProduk.contains(P))
+	    listProduk.add(P);
+    }
+	
+    public void delProduk(Produk P){
+	listProduk.remove(P);
+    }
+    
+    public void delProduk(Barcode B){
+	for(Produk P : listProduk){
+	    if (P.getBarcode() == B)
+		listProduk.remove(P);
+	} 
+    }
+    
+    public boolean isBCAvailable(Barcode B){
+	boolean Available = false;
+	for(Produk P : listProduk){
+	    if (P.getBarcode() == B)
+		Available = true;
 	}
-
-	public Supermarket(String name) {
-		list = new ArrayList<Produk>();
-		this.name = new String(name);
-	}
-
-	// Getters and Setters
-	public List<Produk> getList() {
-		return list;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setList(List<Produk> list) {
-		this.list = list;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	// Methods
-	public void addProduk(Produk P) {
-		if (!list.contains(P))
-			list.add(P);
-	}
-
-	public void delProduk(Produk P) {
-		list.remove(P);
-	}
-
-	public void delProduk(BarCode B) {
-		for (Produk P : list) {
-			if (P.getBarCode() == B)
-				list.remove(P);
-		}
-	}
-
-	public boolean isBCAvailable(BarCode B) {
-		boolean available = false;
-		for (Produk P : list) {
-			if (P.getBarCode().equals(B))
-				available = true;
-		}
-		return available;
-	}
-
-	public void print() {
-		System.out.println("Nama : " + name);
-		for (Produk P : list) {
-			P.print();
-		}
-	}
-
+	return Available;
+    }
+    
+    public void print(){
+        
+        System.out.println("Nama : "+name);
+	for(Produk P : listProduk){
+                P.print();
+		
+	} 
+    }
+    
+	
 }

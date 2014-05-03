@@ -137,7 +137,7 @@ public class MySQLAccess {
 			resultSet = preparedStatement.executeQuery();
 			Vector<String> tag = new Vector<String>(Arrays.asList(resultSet
 					.getString("tag").split(" *, *")));
-			L.add(new Produk(new BarCode(resultSet.getString("barcode")),
+			L.add(new Produk(new Barcode(resultSet.getString("barcode")),
 					resultSet.getString("nama_produk"), resultSet
 							.getInt("harga"), tag));
 		} catch (SQLException e) {
