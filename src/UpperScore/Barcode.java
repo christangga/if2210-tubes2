@@ -1,30 +1,31 @@
 package UpperScore;
 
-public class Barcode {
-    String id;
-    
-    public Barcode()
-    {
-        id=null;
-    }
-    
-    public Barcode(String _id)
-    {
-        id=_id;
-    }
-    
-    public String GetId()
-    {
-        return id;
-    }
-    
-    public void SetId(String _id)
-    {
-        id = _id;
-    }
-    
-    public void PrintBarcode()
-    {
-        System.out.println(id);
-    }
+public class BarCode {
+	
+	// Attributes
+	private String id;
+
+	// Constructors
+	public BarCode() {
+		id = null;
+	}
+
+	public BarCode(String id) {
+		this.id = id;
+	}
+
+	// Getters and Setters
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	// Methods
+	public void print() {
+		System.out.println(id);
+	}
+	
 }

@@ -4,88 +4,72 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Belanja
-{
-	//Attribute
-	private List<Item> ShoppingList;
+public class Belanja {
+	
+	// Attributes
+	private List<Item> shoppingList;
 
-	//Method
-	Belanja() //ctor
-	{
-            ShoppingList = new ArrayList<Item>();
+	// Constructors
+	public Belanja() {
+		shoppingList = new ArrayList<Item>();
 	}
 
-	Belanja (List<Item> A) //ctorparam
-	{
-            ShoppingList = new ArrayList<Item>();
-            ShoppingList = A;
+	public Belanja(List<Item> L) {
+		shoppingList = new ArrayList<Item>(L);
 	}
 
-	public void AddBelanja (Item _item)
-	{
-            ShoppingList.add(_item);
+	// Getters and Setters
+	public List<Item> getshoppingList() {
+		return shoppingList;
 	}
 
-	public void DelBelanja (Item _item)
-	{
-            ShoppingList.remove(_item);
+	public void setshoppingList(List<Item> shoppingList) {
+		this.shoppingList = shoppingList;
 	}
-        
-        public void PrintBelanja ()
-	{
-            System.out.println("---------------------");
-            if(ShoppingList.size()>0)
-            {
-                System.out.println("Shopping List :");
-                for(Item I : ShoppingList){
-                    I.PrintItem();
-                }
-            }
-            else
-            {
-                System.out.println("Shopping List : -");
-            }
-            System.out.println("---------------------");
+
+	// Methods
+	public void addBelanja(Item item) {
+		shoppingList.add(item);
 	}
-        
-        public void MenuBelanja ()
-	{
-            boolean exit=false;
-            while(!exit)
-            {
-                PrintBelanja();
-                System.out.println("1. Add Shopping List");
-                System.out.println("2. Delete Shopping List");
-                System.out.println("3. Back");
-                System.out.println("Choose: ");
-                Scanner in=new Scanner(System.in);
-                int pilihan=in.nextInt();
-                if(pilihan==1)
-                {
-                    System.out.print("Add Barcode: ");
-                    String add=in.next();
-                    
-                }
-                else if(pilihan==2)
-                {
-                    System.out.print("Delete Barcode: ");
-                    String del=in.next();
 
+	public void delBelanja(Item item) {
+		shoppingList.remove(item);
+	}
 
-                }
-                else if(pilihan==3)
-                {
-                    exit=true;
-                }
-                else
-                {
+	public void print() {
+		System.out.println("---------------------");
+		if (shoppingList.size() > 0) {
+			System.out.println("Shopping List :");
+			for (Item item : shoppingList) {
+				item.print();
+			}
+		} else {
+			System.out.println("Shopping List : -");
+		}
+		System.out.println("---------------------");
+	}
 
-                }
-            }
-            
-                   
-            
-        
-        }
-        
+	public void menuBelanja() {
+		boolean exit = false;
+		while (!exit) {
+			print();
+			System.out.println("1. Add Shopping List");
+			System.out.println("2. Delete Shopping List");
+			System.out.println("3. Back");
+			System.out.println("Choose: ");
+			Scanner in = new Scanner(System.in);
+			int pilihan = in.nextInt();
+			if (pilihan == 1) {
+				System.out.print("Add Barcode: ");
+				String add = in.next();
+			} else if (pilihan == 2) {
+				System.out.print("Delete Barcode: ");
+				String del = in.next();
+			} else if (pilihan == 3) {
+				exit = true;
+			}
+			in.close();
+		}
+	}
+
 }

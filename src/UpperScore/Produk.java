@@ -3,74 +3,69 @@ package UpperScore;
 import java.util.Vector;
 
 public class Produk {
-    private Barcode barcode;
-    private String nama;
-    private int harga;
-    private Vector<String> tag;
-    
-    public Produk()
-    {
-        barcode = new Barcode();
-        tag = new Vector<String>();
-        nama = "";
-        harga = 0;
-    }
-    
-    public Produk(Barcode _barcode, String _nama, int _harga, Vector<String> _tag)
-    {
-        barcode = new Barcode(_barcode.id);
-        nama = _nama;
-        harga = _harga;
-        tag = new Vector<String>(_tag);
-    }
-    
-    public Barcode GetBarcode ()
-    {
-        return barcode;
-    }
-    
-    public String GetNama()
-    {
-        return nama;
-    }
-    
-    public int GetHarga()
-    {
-        return harga;
-    }
-    
-    public Vector<String> GetTag()
-    {
-        return tag;
-    }
-    
-    public void SetBarcode(Barcode _barcode)
-    {
-        barcode.SetId(_barcode.id);
-    }
-    
-    public void SetNama(String _nama)
-    {
-        nama = _nama;
-    }
-    
-    public void SetHarga(int _harga)
-    {
-        harga = _harga;
-    }
-    
-    public void SetTag(Vector<String> _tag)
-    {
-        tag = _tag;
-    }
-    
-    public void PrintProduk()
-    {
-        System.out.println("============================");
-        System.out.print("Barcode  : ");
-        barcode.PrintBarcode();
-        System.out.println("Nama     : "+nama);
-        System.out.println("Harga    : "+harga);
-        System.out.println("Tag      : "+tag);
-    }
+
+	// Attributes
+	private BarCode barCode;
+	private String nama;
+	private int harga;
+	private Vector<String> tag;
+
+	// Constructors
+	public Produk() {
+		barCode = new BarCode();
+		nama = "";
+		harga = 0;
+		tag = new Vector<String>();
+	}
+
+	public Produk(BarCode barCode, String nama, int harga, Vector<String> tag) {
+		this.barCode = new BarCode(barCode.getId());
+		this.nama = nama;
+		this.harga = harga;
+		this.tag = new Vector<String>(tag);
+	}
+
+	// Getters and Setters
+	public BarCode getBarCode() {
+		return barCode;
+	}
+
+	public String getNama() {
+		return nama;
+	}
+
+	public int getHarga() {
+		return harga;
+	}
+
+	public Vector<String> getTag() {
+		return tag;
+	}
+
+	public void setBarCode(BarCode barCode) {
+		barCode.setId(barCode.getId());
+	}
+
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
+
+	public void setHarga(int harga) {
+		this.harga = harga;
+	}
+
+	public void setTag(Vector<String> tag) {
+		this.tag = tag;
+	}
+
+	// Methods
+	public void print() {
+		System.out.println("============================");
+		System.out.print("BarCode  : ");
+		barCode.print();
+		System.out.println("Nama     : " + nama);
+		System.out.println("Harga    : " + harga);
+		System.out.println("Tag      : " + tag);
+	}
+
 }
