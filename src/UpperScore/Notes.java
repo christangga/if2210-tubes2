@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Notes 
 {
     // Attributes
@@ -70,7 +69,6 @@ public class Notes
     
     public void menu()
     {
-        
         boolean exit =false;
         while(!exit)
         {
@@ -96,6 +94,10 @@ public class Notes
                 {
                     addList(add);
                 }
+                else
+                {
+                    System.out.println(add+" already in the list.");
+                }
                 
             }
             else if(pilihan==3)
@@ -106,6 +108,10 @@ public class Notes
                 {
                     delList(del);
                 }
+                else
+                {
+                    System.out.println(del+" is not in the list.");
+                }
                 
             }
             else if(pilihan==4)
@@ -114,13 +120,9 @@ public class Notes
             }
             else
             {
-                
+                System.out.println("input error.");
             }
-                   
-            
         }
-    
-        
         
     }
 }

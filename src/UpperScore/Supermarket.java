@@ -1,8 +1,10 @@
 package UpperScore;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Supermarket {
+
     // Attributes
     public List<Produk> listProduk;
     public String name;

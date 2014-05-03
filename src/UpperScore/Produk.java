@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class Produk {
+
     // Attributes
     private Barcode barcode;
     private String nama;
