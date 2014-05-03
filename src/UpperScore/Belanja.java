@@ -33,9 +33,14 @@ public class Belanja
 	}
         
         // Methods
-	public void addBelanja (Item _item)
+	public void addBelanja (String id, int quantity)
 	{
-            shoppingList.add(_item);
+           // MySQLAccess db=new MySQLAccess();
+            
+            //cari di database
+            
+           // Item item=new Item(, quantity);
+            //shoppingList.add(item);
 	}
 
 	public void delBelanja (Item _item)
@@ -60,7 +65,7 @@ public class Belanja
             System.out.println("---------------------");
 	}
         
-        public void menu ()
+        public void menu()
 	{
             boolean exit=false;
             while(!exit)
@@ -81,7 +86,7 @@ public class Belanja
                     System.out.print("Add Quantity: ");
                     int quantity=in.nextInt();
                     
-                    //AddBelanja(add, quantity);
+                    addBelanja(add, quantity);
                     
                 }
                 else if(pilihan==2)

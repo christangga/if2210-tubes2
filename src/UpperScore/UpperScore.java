@@ -28,7 +28,7 @@ public class UpperScore {
             }
             else if(pilihan==2)
             {
-                belanja.print();
+                belanja.menu();
             }
             else if(pilihan==3)
             {
