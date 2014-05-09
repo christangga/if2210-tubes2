@@ -48,33 +48,47 @@ public class Belanja
         
         // Methods
 	public void addBelanja (Barcode id, int quantity)
-        //id pasti ada di supermarket
+        //id pasti ada di supermarket, kalo id udah ada di shoppinglist ditambah quantitynya aja
 	{
-            MySQLAccess db=new MySQLAccess();
-            List<Produk> listproduk =db.getAllProduk(supermarket);
-            int i=0;
             boolean found=false;
-            
-            while(!found)
+            int i=0;
+            while(!found && i<shoppingList.size())
             {
-                if(listproduk.get(i).getBarcode()==id)
+                if(shoppingList.get(i).getBarcode().getId().compareTo(id.getId()) ==0 )
                 {
                     found=true;
-                    String nama=listproduk.get(i).getNama();
-                    int harga=listproduk.get(i).getHarga();
-                    List<String> tag=listproduk.get(i).getTag();
-                    
-                    Item item=new Item(id, nama, harga, tag, quantity);
-                    shoppingList.add(item);
                 }
-                i++;
+                else
+                {
+                    i++;
+                }
+                
             }
-               
+            //8990057426040
+            if(!found)
+            {
+                MySQLAccess db=new MySQLAccess();
+                Produk  produk=new Produk();
+                produk =db.getProduk(supermarket, id);
+
+                String nama=produk.getNama();
+                int harga=produk.getHarga();
+                List<String> tag=produk.getTag();
+
+                Item item=new Item(id, nama, harga, tag, quantity);
+                shoppingList.add(item);
+            }
+            else
+            {
+                shoppingList.get(i).setQuantity(shoppingList.get(i).getQuantity() + quantity);
+            }
+            
+            
 	}
 
-	public void delBelanja (Item _item)
+	public void delBelanja (int index)
 	{
-            shoppingList.remove(_item);
+            shoppingList.remove(index);
 	}
         
         public void print ()
@@ -126,7 +140,6 @@ public class Belanja
                         int i=1;
                         for(Item I : shoppingList)
                         {
-                            System.out.println("Shopping List :");
                             System.out.println(i+".");
                             I.print();
                             i++;
@@ -134,10 +147,18 @@ public class Belanja
                         
                         System.out.print("Insert index: ");
                         int index=in.nextInt();
-                        System.out.print("Set Quantity: ");
-                        int quantity=in.nextInt();
                         
-                        shoppingList.get(index-1).setQuantity(quantity);
+                        
+                        if(index >0 && index <=shoppingList.size())
+                        {
+                            System.out.print("Set Quantity: ");
+                            int quantity=in.nextInt();
+                            shoppingList.get(index-1).setQuantity(quantity);    
+                        }
+                        else
+                        {
+                            System.out.println("Index out of bound");
+                        }
                         
                     }
                     else
@@ -146,7 +167,6 @@ public class Belanja
                         System.out.print("Press any key to continue: ");
                         String any=in.next();
                     }
-                    
                 }
                 else if(pilihan==3)
                 {
@@ -155,7 +175,6 @@ public class Belanja
                     int i=1;
                     for(Item I : shoppingList)
                     {
-                        System.out.println("Shopping List :");
                         System.out.println(i+".");
                         I.print();
                         i++;
@@ -163,9 +182,16 @@ public class Belanja
                     
                     System.out.print("Delete index: ");
                     int index=in.nextInt();
-                    Item item=new Item(shoppingList.get(index-1).getBarcode(),shoppingList.get(index-1).getNama() , shoppingList.get(index-1).getHarga(), shoppingList.get(index-1).getTag(), shoppingList.get(index-1).getQuantity() );
-                    delBelanja (item);
+                    if(index > 0 && index<=shoppingList.size())
+                    {
+                        delBelanja (index-1);
 
+                    }
+                    else
+                    {
+                        System.out.println("Index out of bound");
+                    }
+                    
                 }
                 else if(pilihan==4)
                 {

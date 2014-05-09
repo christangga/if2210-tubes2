@@ -30,7 +30,9 @@ public class UpperScore {
             else if(pilihan==2)
             {
                 System.out.println("Choose Supermarket: ");
-                String sm=in.next();
+                String sm=in.nextLine();
+                sm=in.nextLine();
+                System.out.println(sm);
                 belanja.setsupermarket(sm);
                 belanja.menu();
             }

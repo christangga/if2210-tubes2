@@ -27,7 +27,7 @@ public class MySQLAccess {
 	private ResultSet resultSet;
 
 	public MySQLAccess() {
-		String DROP_TABLE_PRODUK = "DROP TABLE IF EXISTS " + TABLE_PRODUK + ";";
+		/*String DROP_TABLE_PRODUK = "DROP TABLE IF EXISTS " + TABLE_PRODUK + ";";
 		String CREATE_TABLE_PRODUK = "CREATE TABLE " + TABLE_PRODUK + " ("
 				+ "barcode varchar(20) NOT NULL, "
 				+ "nama_produk varchar(255) NOT NULL, "
@@ -73,11 +73,12 @@ public class MySQLAccess {
 			e.printStackTrace();
 		}
 
-		close();
+		close();*/
 	}
 
 	private void open() {
 		try {
+                    
 			// this will load the MySQL driver, each DB has its own driver
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -124,22 +125,49 @@ public class MySQLAccess {
 	}
 
 	// CRUD Methods
-	public List<Produk> getAllProduk(String nama_supermarket) {
-		List<Produk> L = new ArrayList<Produk>();
+        private void writeResultSet(ResultSet resultSet) throws SQLException 
+        {
+            // resultSet is initialised before the first data set
+            
+            while (resultSet.next()){
+                // it is possible to get the columns via name
+                // also possible to get the columns via the column number
+                // which starts at 1
+                // e.g., resultSet.getSTring(2);
+                String barcode = resultSet.getString("barcode");
+                String nama = resultSet.getString("nama_produk");
+                String tag = resultSet.getString("tag");
+                System.out.println("barcode: " + barcode);
+                System.out.println("nama " + nama);
+                System.out.println("tag " + tag);
+            }
+        }
+        
+	public Produk getProduk(String nama_supermarket, Barcode id) {
+		Produk L = new Produk();
 
 		open();
 		try {
-			preparedStatement = connect.prepareStatement("SELECT * FROM "
+                	preparedStatement = connect.prepareStatement("SELECT * FROM "
 					+ TABLE_PRODUK + " NATURAL JOIN " + TABLE_PRODUK_TAG
 					+ " NATURAL JOIN " + TABLE_SUPERMARKET + " NATURAL JOIN "
-					+ TABLE_PRODUK_SUPERMARKET + " WHERE nama_supermarket = "
-					+ nama_supermarket);
+					+ TABLE_PRODUK_SUPERMARKET + " WHERE nama_supermarket = \""
+					+ nama_supermarket+"\" and barcode= \""+id.getId()+ "\";");
 			resultSet = preparedStatement.executeQuery();
-			Vector<String> tag = new Vector<String>(Arrays.asList(resultSet
-					.getString("tag").split(" *, *")));
-			L.add(new Produk(new Barcode(resultSet.getString("barcode")),
+                        
+                        //writeResultSet(resultSet);
+                        //8990057408305
+                        
+                        while(resultSet.next())
+                        {  
+                            System.out.println("msauk");
+                            List<String> tag = new ArrayList<>();
+                            tag=Arrays.asList(resultSet.getString("tag").split(" *, *"));
+                            L.setProduk(new Produk(new Barcode(resultSet.getString("barcode")),
 					resultSet.getString("nama_produk"), resultSet
 							.getInt("harga"), tag));
+                        }
+                        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -149,7 +177,7 @@ public class MySQLAccess {
 	}
 
 	public void addProduk(String barCode, String nama_produk) {
-		open();
+. 		open();
 
 		try {
 			preparedStatement = connect.prepareStatement("INSERT INTO "

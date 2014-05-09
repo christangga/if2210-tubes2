@@ -70,6 +70,15 @@ public class Produk {
         tag = _tag;
     }
     
+    public void setProduk(Produk p)
+    {
+        barcode =p.getBarcode();
+        tag = p.getTag();
+        nama = p.getNama();
+        harga = p.getHarga();
+        
+    }
+    
     // Methods
     public void print()
     {
