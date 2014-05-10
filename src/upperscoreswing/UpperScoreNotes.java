@@ -1,6 +1,7 @@
 package upperscoreswing;
 
-import UpperScore.Notes;
+
+import UpperScore.*;
 import javax.swing.DefaultListModel;
 
 public class UpperScoreNotes extends javax.swing.JFrame {
@@ -11,6 +12,7 @@ public class UpperScoreNotes extends javax.swing.JFrame {
     public UpperScoreNotes() {
         initComponents();
         listModel = new DefaultListModel();
+        notes = new Notes();
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -29,6 +31,7 @@ public class UpperScoreNotes extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Notes");
         setPreferredSize(new java.awt.Dimension(400, 400));
+        setResizable(false);
 
         jLabel1.setText("Notes");
 
@@ -79,15 +82,14 @@ public class UpperScoreNotes extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(25, 25, 25)
                                 .addComponent(jTextField2))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jTextField1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jTextField1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,6 +126,7 @@ public class UpperScoreNotes extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String s = jTextField1.getText();
+        notes.addList(s);
         listModel.addElement(s);
         jList1.setModel(listModel);
         jTextField1.setText("");
@@ -135,6 +138,7 @@ public class UpperScoreNotes extends javax.swing.JFrame {
         for(int i=index.length-1;i>=0;i--)
         {
             listModel.remove(index[i]);
+            notes.delList(notes.getList().get(index[i]-1));
         }
         jList1.setModel(listModel);
     }//GEN-LAST:event_jButton3ActionPerformed

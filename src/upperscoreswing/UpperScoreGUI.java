@@ -5,10 +5,12 @@ import javax.swing.JFrame;
 public class UpperScoreGUI extends javax.swing.JFrame {
 
     public static JFrame main,notes,shop;
+    public static Belanja Shop;
     public static String market;
     
     public UpperScoreGUI() {
         initComponents();
+        Shop = new Belanja();
     }
 
     @SuppressWarnings("unchecked")
@@ -25,8 +27,8 @@ public class UpperScoreGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UpperShop");
-        setForeground(new java.awt.Color(102, 255, 0));
         setPreferredSize(new java.awt.Dimension(400, 400));
+        setResizable(false);
 
         jButton1.setText("Notes");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -112,8 +114,9 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         int y = main.getY();
         shop.pack();
         shop.setLocation(x, y);
-        shop.setVisible(true);
         market = jComboBox1.getSelectedItem().toString();
+        Shop.setsupermarket(market);
+        shop.setVisible(true);    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
