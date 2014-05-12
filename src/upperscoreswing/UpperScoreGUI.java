@@ -51,7 +51,7 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Menu :");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Indomaret" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Indomaret", "Alfamart" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,6 +99,7 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Tombol Notes
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         main.setVisible(false);
         int x = main.getX();
@@ -108,6 +109,7 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         notes.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    // Tombol Shop
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         main.setVisible(false);
         int x = main.getX();
@@ -115,8 +117,10 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         shop.pack();
         shop.setLocation(x, y);
         market = jComboBox1.getSelectedItem().toString();
+        jComboBox1.setEnabled(false);
         Shop.setsupermarket(market);
-        shop.setVisible(true);    
+        shop.setVisible(true);
+        jComboBox1.setEditable(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
@@ -130,7 +134,7 @@ public class UpperScoreGUI extends javax.swing.JFrame {
                 main.pack();
                 main.setLocationRelativeTo(null);
                 notes.setVisible(false);
-                shop.setVisible(false);   
+                shop.setVisible(false);
             }
         });
     }
@@ -138,7 +142,7 @@ public class UpperScoreGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
+    public static javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPopupMenu jPopupMenu1;

@@ -1,29 +1,17 @@
 package upperscoreswing;
 
 import UpperScore.*;
-import java.util.List;
-import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class UpperScoreShop extends javax.swing.JFrame{
-
-    public static List<Produk> daftarProduk;
-    private static TableData TD;
-    
+    private TableData TD;
+    public JFrame review;
+    // Constructor
     public UpperScoreShop() {
         initComponents();
-        daftarProduk = new ArrayList<Produk>();
-        for(int i=0;i<=99;i++)
-        {
-            Produk produk = new Produk();
-            Barcode barcode = new Barcode("000000000"+i);
-            produk.setBarcode(barcode);
-            produk.setHarga(i*10000);
-            produk.setNama("Barang"+i);
-            daftarProduk.add(produk);
-        }
         TD = new TableData();
         jTable2.setModel(TD);
-        //jTable2.getModel().addTableModelListener(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -43,6 +31,7 @@ public class UpperScoreShop extends javax.swing.JFrame{
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Shop");
@@ -66,6 +55,11 @@ public class UpperScoreShop extends javax.swing.JFrame{
         });
 
         jButton3.setText("Finish");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Barcode");
 
@@ -74,6 +68,7 @@ public class UpperScoreShop extends javax.swing.JFrame{
         jLabel6.setText("Total Harga : ");
 
         jTextField4.setEditable(false);
+        jTextField4.setText("0");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,13 +102,26 @@ public class UpperScoreShop extends javax.swing.JFrame{
             }
         });
 
+        jButton5.setText("Set");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,26 +142,26 @@ public class UpperScoreShop extends javax.swing.JFrame{
                                 .addComponent(jLabel3)
                                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -175,13 +183,14 @@ public class UpperScoreShop extends javax.swing.JFrame{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
-                            .addComponent(jButton1))))
+                            .addComponent(jButton5))))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Tombol Back
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         UpperScoreGUI.shop.setVisible(false);
         int x = UpperScoreGUI.shop.getX();
@@ -191,6 +200,13 @@ public class UpperScoreShop extends javax.swing.JFrame{
         UpperScoreGUI.main.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    // method untuk memunculkan messagebox berisi pesan kesalahan
+    public static void infoBox(String infoMessage, String location)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "Warning", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    // Tombol Add
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(!jTextField1.getText().equalsIgnoreCase(""))
         {
@@ -198,29 +214,85 @@ public class UpperScoreShop extends javax.swing.JFrame{
             // 8990057426040
             int jumlah = Integer.parseInt(jSpinner1.getValue().toString());
             Barcode bartemp = new Barcode(jTextField1.getText());
-            UpperScoreGUI.Shop.addBelanja(bartemp, jumlah);
-            String namaProduk = UpperScoreGUI.Shop.getshoppingList().get(UpperScoreGUI.Shop.getshoppingList().size()-1).getNama();
-            int harga = UpperScoreGUI.Shop.getshoppingList().get(UpperScoreGUI.Shop.getshoppingList().size()-1).getHarga() * jumlah;
-            Object[] value = {jTextField1.getText(),namaProduk,jumlah,harga};
-            TD.RefreshTable(UpperScoreGUI.Shop);
-            jTable2.setModel(TD);
-            jTextField1.setText("");
-            jSpinner1.setValue(0);
+            if(jumlah>0)
+            {
+                UpperScoreGUI.Shop.addBelanja(bartemp, jumlah);
+            }
+            else
+            {
+                UpperScoreShop.infoBox("Quantity must be above zero!","title bar message");
+            }
+            UpdatePage();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    // Tombol Delete
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int[] index = jTable2.getSelectedRows();
-        if(index.length!=0)
+        if(index.length!=0 && !UpperScoreGUI.Shop.getshoppingList().isEmpty())
         {
             for(int i=index.length-1;i>=0;i--)
             {
                 UpperScoreGUI.Shop.delBelanja(index[i]);
             }
         }
-        TD.RefreshTable(UpperScoreGUI.Shop);
+        UpdatePage();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    // Tombol Finish
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        UpperScoreGUI.shop.setVisible(false);
+        int x = UpperScoreGUI.shop.getX();
+        int y = UpperScoreGUI.shop.getY();
+        review = new ReviewShopGUI();
+        review.pack();
+        review.setLocation(x, y);
+        review.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    // Tombol Set
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if(!jTextField1.getText().equalsIgnoreCase(""))
+        {
+            int jumlah = Integer.parseInt(jSpinner1.getValue().toString());
+            Barcode bartemp = new Barcode(jTextField1.getText());
+            if(jumlah>0)
+            {
+                int i=0;
+                boolean found=false;
+                while(i<UpperScoreGUI.Shop.getshoppingList().size() && !found)
+                {
+                    if(UpperScoreGUI.Shop.getshoppingList().get(i).getBarcode().getId().equalsIgnoreCase(bartemp.getId()))
+                    {
+                        found = true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                UpperScoreGUI.Shop.getshoppingList().get(i).setQuantity(jumlah);
+            }
+            else
+            {
+                UpperScoreShop.infoBox("Quantity must be above zero!","title bar message");
+            }
+            UpdatePage();
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
    
+    // Method untuk mengupdate tabel, serta field - field pada layar menjadi yang terbaru
+    public void UpdatePage()
+    {
+        TD.RefreshTable(UpperScoreGUI.Shop);
+        jTable2.setModel(TD);
+        jTextField1.setText("");
+        jSpinner1.setValue(0);
+        int hargatotal = UpperScoreGUI.Shop.totalHarga();
+        jTextField4.setText(hargatotal+"");
+    }
+    
+    // Program Utama
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -234,6 +306,7 @@ public class UpperScoreShop extends javax.swing.JFrame{
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
