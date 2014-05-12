@@ -11,13 +11,13 @@ public class Notes
     private int budget;
     
    // Constructors
-    Notes()
+    public Notes()
     {
        list=new ArrayList<>();
        budget=0; 
     }
     
-    Notes(List<String> _list, int _budget)
+    public Notes(List<String> _list, int _budget)
     {
        list=new ArrayList<>();
        list=_list;
@@ -51,7 +51,6 @@ public class Notes
         list.add(newlist);
     }
     
-   
     public void delList(String dellist)
     {
         list.remove(dellist);
@@ -89,7 +88,8 @@ public class Notes
             else if(pilihan==2)
             {
                 System.out.print("Add List: ");
-                String add=in.next();
+                String add=in.nextLine();
+                add=in.nextLine();
                 if(!list.contains(add))
                 {
                     addList(add);
@@ -120,9 +120,8 @@ public class Notes
             }
             else
             {
-                System.out.println("input error.");
+                System.out.println("Index out of bound");
             }
         }
-        
     }
 }

@@ -65,18 +65,27 @@ public class Belanja
                 
             }
             //8990057426040
+            //8990057704308
             if(!found)
             {
                 MySQLAccess db=new MySQLAccess();
                 Produk  produk=new Produk();
                 produk =db.getProduk(supermarket, id);
+                
+                if(produk.getNama()!=null)
+                {
+                    String nama=produk.getNama();
+                    int harga=produk.getHarga();
+                    List<String> tag=produk.getTag();
 
-                String nama=produk.getNama();
-                int harga=produk.getHarga();
-                List<String> tag=produk.getTag();
-
-                Item item=new Item(id, nama, harga, tag, quantity);
-                shoppingList.add(item);
+                    Item item=new Item(produk.getBarcode(), nama, harga, tag, quantity);
+                    shoppingList.add(item);
+                }
+                else
+                {
+                    System.out.println(id.getId()+" not exist");
+                }
+                
             }
             else
             {
@@ -91,9 +100,15 @@ public class Belanja
             shoppingList.remove(index);
 	}
         
+        public void delShoppingList()
+        {
+            shoppingList.clear();
+        }
+        
         public void print ()
 	{
-            System.out.println("---------------------");
+            System.out.println("-------------------------------------");
+            System.out.println("-------------------------------------");
             if(shoppingList.size()>0)
             {
                 System.out.println("Shopping List :");
@@ -105,11 +120,23 @@ public class Belanja
             {
                 System.out.println("Shopping List : -");
             }
-            System.out.println("---------------------");
+            System.out.println("-------------------------------------");
+            System.out.println("-------------------------------------");
 	}
         
-        public void menu()
+        public int totalHarga()
+        {
+            int total=0;
+            for(Item i:shoppingList )
+            {
+                total=total+(i.getQuantity() *i.getHarga());
+            }
+            return total;
+        }
+        
+        public boolean menu()
 	{
+            boolean finish=false;
             boolean exit=false;
             while(!exit)
             {
@@ -117,7 +144,8 @@ public class Belanja
                 System.out.println("1. Add Shopping List");
                 System.out.println("2. Set Quantity");
                 System.out.println("3. Delete Shopping List");
-                System.out.println("4. Back");
+                System.out.println("4. Preview");
+                System.out.println("5. Back");
                 System.out.println("Choose: ");
                 Scanner in=new Scanner(System.in);
                 int pilihan=in.nextInt();
@@ -195,15 +223,124 @@ public class Belanja
                 }
                 else if(pilihan==4)
                 {
+                     finish=menuReview();
+                     if(finish)
+                     {
+                        exit=true;
+                     }
+                         
+                }
+                else if(pilihan==5)
+                {
                     exit=true;
                 }
                 else
                 {
-                    System.out.println("input error.");
+                    System.out.println("Index out of bound");
                 }
                 
             }
+            return finish;
             
         }
         
+        public boolean menuReview()
+        {
+            boolean exit=false;
+            boolean finish=false; 
+            while(!exit)
+            {
+                List<String> sudahbelanja=new ArrayList<String>();
+                List<String> belumbelanja=new ArrayList<String>();
+                for(String s:UpperScore.note.getList())
+                {
+                    boolean found=false;
+                    int i=0;
+                    while(!found && i <shoppingList.size())
+                    {
+                        if(shoppingList.get(i).getTag().contains(s))
+                        {
+                            found=true;
+                            sudahbelanja.add(s);
+                        }
+                        i++;
+                    }
+                    if(!found)
+                    {
+                        belumbelanja.add(s);
+                    }
+                }
+                System.out.println("===============================");
+                System.out.println("Preview:  ");
+                System.out.println("Barang yang sudah dibelanja: ");
+                for(String s:sudahbelanja)
+                {
+                    System.out.println(s);
+                }
+                System.out.println("Barang yang belum dibelanja: ");
+                for(String s:belumbelanja)
+                {
+                    System.out.println(s);
+                }
+
+                System.out.println("Total Belanja: "+totalHarga());
+                if(totalHarga()> UpperScore.note.getBudget())
+                {
+                    List<String> belanjalebih=new ArrayList<String>();
+                    for(Item I:shoppingList)
+                    {
+                        boolean found=false;
+                        int j=0;
+                        while(!found & j<I.getTag().size())
+                        {
+                            if(UpperScore.note.getList().contains(I.getTag().get(j)))
+                            {
+                                found=true;
+                            }
+                            j++;
+                        }
+
+                        if(!found)
+                        {
+                            belanjalebih.add(I.getNama());
+                        }
+                    }
+                    System.out.println("Barang yang berlebih: ");
+                    for(String s:belanjalebih)
+                    {
+                        System.out.println(s);
+                    }
+
+                }
+                System.out.println("===============================");
+                System.out.println("1.Finish Shopping");
+                System.out.println("2.Back");
+                System.out.println("Choose: ");
+                Scanner in=new Scanner(System.in);
+                int pilihan=in.nextInt();
+                if(pilihan==1)
+                {
+                    System.out.println("Daftar Barcode Belanjaan: ");
+                    int j=1;
+                    for(Item I:shoppingList)
+                    {
+                        System.out.print(j+". ");
+                        System.out.println(I.getBarcode().getId());
+                        j++;
+                    }
+                    exit=true;
+                    finish=true;
+                }
+                else if(pilihan==2)
+                {
+                    exit=true;
+                }
+                else
+                {
+                    System.out.println("Index out of bound");
+                }
+            }
+            
+            return finish;
+        }
 }

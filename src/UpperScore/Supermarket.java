@@ -10,12 +10,12 @@ public class Supermarket {
     public String name;
     
     // Constructors
-    Supermarket(){
+    public Supermarket(){
     	listProduk = new ArrayList<Produk>();
     	name =null;
     }
     
-    Supermarket(String S){
+    public Supermarket(String S){
 	listProduk = new ArrayList<Produk>();
 	name = new String(S);
     }

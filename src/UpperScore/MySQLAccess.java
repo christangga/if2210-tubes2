@@ -149,8 +149,7 @@ public class MySQLAccess {
 		open();
 		try {
                 	preparedStatement = connect.prepareStatement("SELECT * FROM "
-					+ TABLE_PRODUK + " NATURAL JOIN " + TABLE_PRODUK_TAG
-					+ " NATURAL JOIN " + TABLE_SUPERMARKET + " NATURAL JOIN "
+					+ TABLE_PRODUK + " NATURAL JOIN " + TABLE_SUPERMARKET + " NATURAL JOIN "
 					+ TABLE_PRODUK_SUPERMARKET + " WHERE nama_supermarket = \""
 					+ nama_supermarket+"\" and barcode= \""+id.getId()+ "\";");
 			resultSet = preparedStatement.executeQuery();
@@ -160,7 +159,6 @@ public class MySQLAccess {
                         
                         while(resultSet.next())
                         {  
-                            System.out.println("msauk");
                             List<String> tag = new ArrayList<>();
                             tag=Arrays.asList(resultSet.getString("tag").split(" *, *"));
                             L.setProduk(new Produk(new Barcode(resultSet.getString("barcode")),
@@ -172,12 +170,11 @@ public class MySQLAccess {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return L;
 	}
 
 	public void addProduk(String barCode, String nama_produk) {
-. 		open();
+ 		open();
 
 		try {
 			preparedStatement = connect.prepareStatement("INSERT INTO "
