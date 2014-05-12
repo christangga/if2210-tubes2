@@ -13,6 +13,7 @@ public class UpperScoreNotes extends javax.swing.JFrame {
         initComponents();
         listModel = new DefaultListModel();
         notes = new Notes();
+        notes.setBudget(0);
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -122,6 +123,14 @@ public class UpperScoreNotes extends javax.swing.JFrame {
         UpperScoreGUI.main.pack();
         UpperScoreGUI.main.setLocation(x, y);
         UpperScoreGUI.main.setVisible(true);
+        if(!jTextField2.getText().toString().equalsIgnoreCase(""))
+        {
+            notes.setBudget(Integer.parseInt(jTextField2.getText().toString()));
+        }
+        else
+        {
+            notes.setBudget(0);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

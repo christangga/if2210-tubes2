@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class UpperScoreShop extends javax.swing.JFrame{
-    private TableData TD;
+    public static TableData TD;
     public JFrame review;
     // Constructor
     public UpperScoreShop() {
