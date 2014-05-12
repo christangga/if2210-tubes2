@@ -181,7 +181,20 @@ public class Belanja
                         {
                             System.out.print("Set Quantity: ");
                             int quantity=in.nextInt();
-                            shoppingList.get(index-1).setQuantity(quantity);    
+                            if(quantity >0)
+                            {
+                                shoppingList.get(index-1).setQuantity(quantity);  
+                                
+                            }
+                            else if(quantity==0)
+                            {
+                                shoppingList.remove(index-1);
+                            }
+                            else
+                            {
+                                System.out.println("cannot set quantity below 0.");
+                            }
+                              
                         }
                         else
                         {
