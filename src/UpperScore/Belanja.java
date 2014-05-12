@@ -162,7 +162,7 @@ public class Belanja
                     }
                     else
                     {
-                        System.out.print("quantity cant below 0.");
+                        System.out.print("quantity must be above 0.");
                     }
                    
                 }
@@ -199,7 +199,7 @@ public class Belanja
                             }
                             else
                             {
-                                System.out.println("quantity cant below 0.");
+                                System.out.println("quantity must be above 0.");
                             }
                               
                         }
@@ -292,15 +292,32 @@ public class Belanja
                 }
                 System.out.println("===============================");
                 System.out.println("Preview:  ");
-                System.out.println("Barang yang sudah dibelanja: ");
-                for(String s:sudahbelanja)
+                System.out.print("Barang yang sudah dibelanja: ");
+                if(sudahbelanja.size()>0)
                 {
-                    System.out.println(s);
+                    System.out.println("");
+                    for(String s:sudahbelanja)
+                    {
+                        System.out.println(s);
+                    }
                 }
-                System.out.println("Barang yang belum dibelanja: ");
-                for(String s:belumbelanja)
+                else
                 {
-                    System.out.println(s);
+                    System.out.println("-");
+                }
+                
+                System.out.print("Barang yang belum dibelanja: ");
+                if(belumbelanja.size()>0)
+                {
+                    System.out.println("");
+                    for(String s:belumbelanja)
+                    {
+                        System.out.println(s);
+                    }
+                }
+                else
+                {
+                    System.out.println("-");
                 }
 
                 System.out.println("Total Belanja: "+totalHarga());
@@ -327,7 +344,7 @@ public class Belanja
                     }
                     System.out.println("Barang yang berlebih: ");
                     for(String s:belanjalebih)
-                    {
+                    { 
                         System.out.println(s);
                     }
 
@@ -340,16 +357,40 @@ public class Belanja
                 int pilihan=in.nextInt();
                 if(pilihan==1)
                 {
-                    System.out.println("Daftar Barcode Belanjaan: ");
-                    int j=1;
-                    for(Item I:shoppingList)
+                    if(shoppingList.size()>0)
                     {
-                        System.out.print(j+". ");
-                        System.out.println(I.getBarcode().getId());
-                        j++;
+                        System.out.println("Daftar Barcode Belanjaan: ");
+                        int j=1;
+                        for(Item I:shoppingList)
+                        {
+                            System.out.print(j+". ");
+                            System.out.println(I.getBarcode().getId());
+                            j++;
+                        }
+                        exit=true;
+                        finish=true;
                     }
-                    exit=true;
-                    finish=true;
+                    else
+                    {
+                        System.out.println("You don't buy anything.");
+                        System.out.println("Exit shopping from "+supermarket + "? ");
+                        System.out.println("1. Yes");
+                        System.out.println("2. No");
+                        int index=in.nextInt();
+                        if(index==1)
+                        {
+                            exit=true;
+                            finish=true;
+                        }
+                        else if(index==2)
+                        {
+                            
+                        }
+                        else
+                        {
+                            System.out.println("Index out of bound.");
+                        }
+                    }
                 }
                 else if(pilihan==2)
                 {

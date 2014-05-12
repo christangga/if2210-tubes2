@@ -83,7 +83,15 @@ public class Notes
             {
                 System.out.print("Set Budget: ");
                 int budget=in.nextInt();
-                setBudget(budget);
+                if(budget>=0)
+                {
+                    setBudget(budget);
+                }
+                else
+                {
+                    System.out.println("budget cant be lower than 0");
+                }
+                
             }
             else if(pilihan==2)
             {

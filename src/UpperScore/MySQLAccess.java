@@ -156,7 +156,6 @@ public class MySQLAccess {
                         
                         //writeResultSet(resultSet);
                         //8990057408305
-                       
                         
                         while(resultSet.next())
                         {  
