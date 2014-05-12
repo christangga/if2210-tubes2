@@ -1,5 +1,7 @@
 package UpperScore;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -32,9 +34,21 @@ public class UpperScore {
                 {
                     if(finish)
                     {
+                        System.out.println("Supermarket: ");
+                        List <String> supermarket=new ArrayList<> ();
+                        
+                        MySQLAccess a=new MySQLAccess();
+                        supermarket=a.getSupermarket();
+                        int i=0;
+                        for(String s: supermarket)
+                        {
+                            i++;
+                            System.out.println(i+". "+s);
+                        }
                         System.out.println("Choose Supermarket: ");
-                        String sm=in.nextLine();
-                        sm=in.nextLine();
+                        int index=in.nextInt();
+                        
+                        String sm=supermarket.get(index-1);
                         belanja.setsupermarket(sm);
                         belanja.delShoppingList();
                     }

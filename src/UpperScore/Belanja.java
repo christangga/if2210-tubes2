@@ -155,9 +155,16 @@ public class Belanja
                     String barcodeid=in.next();
                     System.out.print("Add Quantity: ");
                     int quantity=in.nextInt();
-                    
-                    Barcode bc=new Barcode(barcodeid);
-                    addBelanja(bc, quantity);
+                    if(quantity>0)
+                    {
+                        Barcode bc=new Barcode(barcodeid);
+                        addBelanja(bc, quantity);
+                    }
+                    else
+                    {
+                        System.out.print("quantity cant below 0.");
+                    }
+                   
                 }
                 else if(pilihan==2)
                 {
@@ -192,7 +199,7 @@ public class Belanja
                             }
                             else
                             {
-                                System.out.println("cannot set quantity below 0.");
+                                System.out.println("quantity cant below 0.");
                             }
                               
                         }

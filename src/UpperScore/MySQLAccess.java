@@ -156,6 +156,7 @@ public class MySQLAccess {
                         
                         //writeResultSet(resultSet);
                         //8990057408305
+                       
                         
                         while(resultSet.next())
                         {  
@@ -165,6 +166,7 @@ public class MySQLAccess {
 					resultSet.getString("nama_produk"), resultSet
 							.getInt("harga"), tag));
                         }
+                        close();
                         
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -172,7 +174,28 @@ public class MySQLAccess {
 		}
 		return L;
 	}
-
+        
+        public List getSupermarket() {
+            List<String> ns=new ArrayList<>();
+            open();
+            try {
+                	preparedStatement = connect.prepareStatement("SELECT nama_supermarket FROM "+ TABLE_SUPERMARKET + ";");
+			resultSet = preparedStatement.executeQuery();
+                        
+                        //writeResultSet(resultSet);
+                        while(resultSet.next())
+                        {
+                            ns.add(resultSet.getString("nama_supermarket"));
+                        }
+                        close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+                return ns;
+        }
+        
+        
 	public void addProduk(String barCode, String nama_produk) {
  		open();
 
@@ -243,5 +266,8 @@ public class MySQLAccess {
 
 		close();
 	}
+        
+        
+        
 
 }
