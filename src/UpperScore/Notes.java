@@ -1,5 +1,6 @@
 package UpperScore;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -42,7 +43,7 @@ public class Notes
     
     public void setList(List<String> list) 
     {
-	list = list;
+	this.list = list;
     }
     
     // Methods
@@ -65,6 +66,38 @@ public class Notes
         System.out.println("-----------------------------");
        
     }
+    public void save()
+    {
+	try{
+	    FileWriter F = new FileWriter(new File("logBelanja.dat"));
+	    for (String S:list){
+		F.write(S + "\n");
+	    }
+	    F.close();
+	}
+	catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void load()
+    {
+	Scanner FileReader;
+	try{
+	    FileReader = new Scanner(new FileInputStream("logBelanja.dat"));
+	    String belanjaLine;
+	    while(FileReader.hasNext()){
+		belanjaLine = FileReader.nextLine();
+		list.add(belanjaLine);
+	    }
+	}
+	catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+	}
+	
+    }
     
     public void menu()
     {
@@ -79,19 +112,15 @@ public class Notes
             System.out.println("Choose: ");
             Scanner in=new Scanner(System.in);
             int pilihan=in.nextInt();
+            
+            assert (pilihan>0  && pilihan <=4): "Invalid input" ;
             if(pilihan==1)
             {
                 System.out.print("Set Budget: ");
                 int budget=in.nextInt();
-                if(budget>=0)
-                {
-                    setBudget(budget);
-                }
-                else
-                {
-                    System.out.println("budget cant be lower than 0");
-                }
                 
+                assert (budget>=0): "budget can't be lower than 0" ;
+                setBudget(budget);
             }
             else if(pilihan==2)
             {
@@ -126,10 +155,7 @@ public class Notes
             {
                 exit=true;
             }
-            else
-            {
-                System.out.println("Index out of bound");
-            }
+            
         }
     }
 }
