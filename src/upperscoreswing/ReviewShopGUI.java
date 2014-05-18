@@ -6,6 +6,10 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 
 public class ReviewShopGUI extends javax.swing.JFrame {
+    
+    // Constructor, menginisialisasi semua komponen swing, serta mengisi tiga 
+    // buah list yaitu list barang yang sudah dibeli, yang belum dibeli, dan
+    // barang yang berlebihan
     public ReviewShopGUI() {
         initComponents();
         int hargatotal = UpperScoreGUI.Shop.totalHarga();
@@ -19,7 +23,10 @@ public class ReviewShopGUI extends javax.swing.JFrame {
         List<String> sudahbelanja=new ArrayList<String>();
         List<String> belumbelanja=new ArrayList<String>();
         List<String> belanjalebih=new ArrayList<String>();
-        for(String s : UpperScoreNotes.notes.getList())
+        
+        // Mengecek apakah barang yang di notes sudah dibeli atau belum, jika
+        // sudah maka dimasukkan ke listModel1 dan ke listModel2 jika belum
+        for(String s : UpperScoreGUI.notes.getList())
         {
             boolean found=false;
             int i=0;
@@ -40,7 +47,9 @@ public class ReviewShopGUI extends javax.swing.JFrame {
             }
         }
         
-        if(UpperScoreGUI.Shop.totalHarga()> UpperScoreNotes.notes.getBudget())
+        // Mengecek apakah ada barang belanjaan yang berlebihan (dibeli tapi 
+        // tidak ada di notes)
+        if(UpperScoreGUI.Shop.totalHarga()> UpperScoreGUI.notes.getBudget())
         {
             for(Item I:UpperScoreGUI.Shop.getshoppingList())
             {
@@ -48,7 +57,7 @@ public class ReviewShopGUI extends javax.swing.JFrame {
                 int j=0;
                 while(!found & j<I.getTag().size())
                 {
-                    if(UpperScore.note.getList().contains(I.getTag().get(j)))
+                    if(UpperScoreGUI.notes.getList().contains(I.getTag().get(j)))
                     {
                         found=true;
                     }
@@ -205,8 +214,6 @@ public class ReviewShopGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        UpperScoreGUI.Shop.delShoppingList();
-        UpperScoreShop.TD.RefreshTable(UpperScoreGUI.Shop);
         this.setVisible(false);
         int x = this.getX();
         int y = this.getY();
@@ -214,6 +221,22 @@ public class ReviewShopGUI extends javax.swing.JFrame {
         UpperScoreGUI.main.setLocation(x, y);
         UpperScoreGUI.main.setVisible(true);
         UpperScoreGUI.jComboBox1.setEnabled(true);
+        
+        // Menghapus isi notes yang sudah dibeli dan budget diset kembali menjadi 0
+        for(Item i:UpperScoreGUI.Shop.getshoppingList())
+        {
+            for(String s: i.getTag())
+            {
+                if(UpperScoreGUI.notes.getList().contains(s))
+                {
+                    UpperScoreGUI.notes.delList(s);
+                }
+            }
+        }
+        UpperScoreGUI.notes.setBudget(0);
+        UpperScoreGUI.Shop.delShoppingList();
+        UpperScoreShop.TD.RefreshTable(UpperScoreGUI.Shop);
+        UpperScoreGUI.notes.save();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

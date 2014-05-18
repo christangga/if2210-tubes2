@@ -3,6 +3,7 @@ package upperscoreswing;
 import javax.swing.table.AbstractTableModel;
 import UpperScore.*;
 
+// Kelas untuk pengisian tabel pada layar UpperScoreShop
 public class TableData extends AbstractTableModel{
     private final String[] columnNames = {"Barcode","Nama","Quantity","Price"};
     private Object[][] data;
@@ -10,6 +11,8 @@ public class TableData extends AbstractTableModel{
                                                 java.lang.String.class, 
                                                 java.lang.Integer.class, 
                                                 java.lang.Integer.class};
+    
+    // Constructor, mengisi nilai awal tabel yaitu kosong, kosong, 0, 0
     public TableData()
     {
         data = new Object[1][4];
@@ -55,6 +58,7 @@ public class TableData extends AbstractTableModel{
         fireTableCellUpdated(row, col);
     }
     
+    // Membuat isi tabel menjadi yang terupdate
     public void RefreshTable(Belanja belanja)
     {
         int currentRow = getRowCount();

@@ -7,13 +7,11 @@ import javax.swing.DefaultListModel;
 public class UpperScoreNotes extends javax.swing.JFrame {
 
     public static DefaultListModel listModel;
-    public static Notes notes;
     
+    // Constructor, menginisialisasi semua komponen swing dan membuat list model untuk jList
     public UpperScoreNotes() {
         initComponents();
         listModel = new DefaultListModel();
-        notes = new Notes();
-        notes.setBudget(0);
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -116,42 +114,67 @@ public class UpperScoreNotes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Tombol Back, jika kotak budget berisi nilai minus maka layar tidak akan
+    // berpindah, jika kotak budget berisi kosong / 0, maka budget akan diset 0.
+    // Jika budget berisi angka sesuatu, maka budget akan diset menjadi angka
+    // itu kemudian kembali ke menu utama
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        UpperScoreGUI.notes.setVisible(false);
-        int x = UpperScoreGUI.notes.getX();
-        int y = UpperScoreGUI.notes.getY();
-        UpperScoreGUI.main.pack();
-        UpperScoreGUI.main.setLocation(x, y);
-        UpperScoreGUI.main.setVisible(true);
-        if(!jTextField2.getText().toString().equalsIgnoreCase(""))
+        assert(UpperScoreShop.isDigitAll(jTextField2.getText()));
+        if(Integer.parseInt(jTextField2.getText().toString())<0)
         {
-            notes.setBudget(Integer.parseInt(jTextField2.getText().toString()));
+            UpperScoreShop.infoBox("Budget must not be below zero!","title bar message");
+            jTextField2.setText("0");
         }
         else
         {
-            notes.setBudget(0);
+            UpperScoreGUI.note.setVisible(false);
+            int x = UpperScoreGUI.note.getX();
+            int y = UpperScoreGUI.note.getY();
+            UpperScoreGUI.main.pack();
+            UpperScoreGUI.main.setLocation(x, y);
+            UpperScoreGUI.main.setVisible(true);
+            if(!jTextField2.getText().toString().equalsIgnoreCase(""))
+            {
+                UpperScoreGUI.notes.setBudget(Integer.parseInt(jTextField2.getText().toString()));
+            }
+            else
+            {
+                UpperScoreGUI.notes.setBudget(0);
+            }
+            UpperScoreGUI.notes.save();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    // Tombol add, jika kata yang diinput sudah ada di list maka tidak akan
+    // ditambahkan, jika tidak ada maka akan ditambahkan. List akan diupdate
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String s = jTextField1.getText();
-        notes.addList(s);
-        listModel.addElement(s);
+        if(!UpperScoreGUI.notes.getList().contains(s))
+        {
+            UpperScoreGUI.notes.addList(s);
+        }
+        listModel.clear();
+        for(String a : UpperScoreGUI.notes.getList())
+        {
+            listModel.addElement(a);
+        }
         jList1.setModel(listModel);
         jTextField1.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    // Tombol delete, menghapus index yang dipilih pada list
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int[] index = jList1.getSelectedIndices();
         String s = "";
         for(int i=index.length-1;i>=0;i--)
         {
             listModel.remove(index[i]);
-            notes.delList(notes.getList().get(index[i]-1));
+            UpperScoreGUI.notes.delList(UpperScoreGUI.notes.getList().get(index[i]));
         }
         jList1.setModel(listModel);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    // Program utama
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -166,9 +189,9 @@ public class UpperScoreNotes extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList jList1;
+    public static javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    public static javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

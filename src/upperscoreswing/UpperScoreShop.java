@@ -7,7 +7,9 @@ import javax.swing.JOptionPane;
 public class UpperScoreShop extends javax.swing.JFrame{
     public static TableData TD;
     public JFrame review;
-    // Constructor
+    
+    // Constructor, menginisialisasi semua komponen swing, membuat tabel data
+    // dan mengisi tabel kosong
     public UpperScoreShop() {
         initComponents();
         TD = new TableData();
@@ -190,7 +192,7 @@ public class UpperScoreShop extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Tombol Back
+    // Tombol Back, kembali ke menu utama
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         UpperScoreGUI.shop.setVisible(false);
         int x = UpperScoreGUI.shop.getX();
@@ -200,14 +202,35 @@ public class UpperScoreShop extends javax.swing.JFrame{
         UpperScoreGUI.main.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    // method untuk memunculkan messagebox berisi pesan kesalahan
+    // Method untuk memunculkan messagebox berisi pesan kesalahan
     public static void infoBox(String infoMessage, String location)
     {
         JOptionPane.showMessageDialog(null, infoMessage, "Warning", JOptionPane.INFORMATION_MESSAGE);
     }
     
-    // Tombol Add
+    // Method untuk mengecek apakah sebuah string terdiri dari angka semua
+    public static boolean isDigitAll(String s)
+    {
+        char[] array = s.toCharArray();
+        int i=0;
+        boolean isdigit=true;
+        while(i<array.length && isdigit)
+        {
+            if(!Character.isDigit(array[i]))
+            {
+                isdigit=false;
+            }
+            i++;
+        }
+        return isdigit;
+    }
+    
+    // Tombol Add, Jika Barcode yang diinput belum ada di list belanjaan maka
+    // barang akan ditambahkan ke tabel, jika sudah ada, maka jumlah barang
+    // tersebut akan bertambah sesuai quantity yang diinput pada jSpinner.
+    // Akan menampilkan pesan kesalahan jika quantity yang diinput <= 0.
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        assert(isDigitAll(jTextField1.getText()));
         if(!jTextField1.getText().equalsIgnoreCase(""))
         {
             // 8990057408305
@@ -216,7 +239,13 @@ public class UpperScoreShop extends javax.swing.JFrame{
             Barcode bartemp = new Barcode(jTextField1.getText());
             if(jumlah>0)
             {
-                UpperScoreGUI.Shop.addBelanja(bartemp, jumlah);
+                try{
+                    UpperScoreGUI.Shop.addBelanja(bartemp, jumlah);
+                }
+                catch(Exception e)
+                {
+                    UpperScoreShop.infoBox(e.getMessage(),"title bar message");
+                }
             }
             else
             {
@@ -226,7 +255,7 @@ public class UpperScoreShop extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    // Tombol Delete
+    // Tombol Delete, akan menghapus index belanjaan yang dipilih di tabel
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int[] index = jTable2.getSelectedRows();
         if(index.length!=0 && !UpperScoreGUI.Shop.getshoppingList().isEmpty())
@@ -239,7 +268,8 @@ public class UpperScoreShop extends javax.swing.JFrame{
         UpdatePage();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    // Tombol Finish
+    // Tombol Finish, menandakan sudah selesai belanja dan berpindah ke layar
+    // ReviewShop
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         UpperScoreGUI.shop.setVisible(false);
         int x = UpperScoreGUI.shop.getX();
@@ -250,7 +280,9 @@ public class UpperScoreShop extends javax.swing.JFrame{
         review.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    // Tombol Set
+    // Tombol Set, mencari barcode yang diinput pada tabel, jika ketemu maka
+    // jumlah barang tersebut akan diubah menjadi inputan, jika tidak ketemu
+    // maka tabel tidak akan berubah.
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         if(!jTextField1.getText().equalsIgnoreCase(""))
         {
@@ -271,7 +303,10 @@ public class UpperScoreShop extends javax.swing.JFrame{
                         i++;
                     }
                 }
-                UpperScoreGUI.Shop.getshoppingList().get(i).setQuantity(jumlah);
+                if(found)
+                {
+                    UpperScoreGUI.Shop.getshoppingList().get(i).setQuantity(jumlah);
+                }
             }
             else
             {
@@ -281,7 +316,8 @@ public class UpperScoreShop extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_jButton5ActionPerformed
    
-    // Method untuk mengupdate tabel, serta field - field pada layar menjadi yang terbaru
+    // Method untuk mengupdate tabel, serta field - field pada layar menjadi
+    // yang terbaru
     public void UpdatePage()
     {
         TD.RefreshTable(UpperScoreGUI.Shop);

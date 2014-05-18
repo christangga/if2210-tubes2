@@ -1,13 +1,16 @@
 package upperscoreswing;
 import UpperScore.*;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 public class UpperScoreGUI extends javax.swing.JFrame {
 
-    public static JFrame main,notes,shop;
+    public static JFrame main,note,shop,about;
     public static Belanja Shop;
     public static String market;
+    public static Notes notes;
     
+    // Constructor, menginisialisasi semua komponen swing dan membuat belanja baru
     public UpperScoreGUI() {
         initComponents();
         Shop = new Belanja();
@@ -45,6 +48,11 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         });
 
         jButton3.setText("About Us");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/upperscoreswing/banner.png"))); // NOI18N
 
@@ -99,17 +107,27 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Tombol Notes
+    // Tombol Notes, memunculkan layar notes dan mengisikan list dengan notes
+    // yang sudah ada
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         main.setVisible(false);
         int x = main.getX();
         int y = main.getY();
-        notes.pack();
-        notes.setLocation(x, y);
-        notes.setVisible(true);
+        note = new UpperScoreNotes();
+        UpperScoreNotes.listModel = new DefaultListModel();
+        for(String s : notes.getList())
+        {
+            UpperScoreNotes.listModel.addElement(s);
+        }
+        UpperScoreNotes.jList1.setModel(UpperScoreNotes.listModel);
+        UpperScoreNotes.jTextField2.setText(notes.getBudget()+"");
+        note.pack();
+        note.setLocation(x, y);
+        note.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    // Tombol Shop
+    // Tombol Shop, membuka layar belanjaan, mengambil supermarket yang sudah
+    // dipilih dan mengdisable combo box untuk memilih tempat belanja
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         main.setVisible(false);
         int x = main.getX();
@@ -123,18 +141,34 @@ public class UpperScoreGUI extends javax.swing.JFrame {
         jComboBox1.setEditable(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    // Tombol About Us, berisi data kami yang membuat program ini
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        main.setVisible(false);
+        int x = main.getX();
+        int y = main.getY();
+        about.pack();
+        about.setLocation(x, y);
+        about.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    // Program Utama, membuat seluruh GUI yang ada kecuali ReviewShopGUI
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
                 main = new UpperScoreGUI();
-                notes = new UpperScoreNotes();
+                note = new UpperScoreNotes();
                 shop = new UpperScoreShop();
+                about = new AboutUSGUI();
                 main.setVisible(true);
                 main.pack();
                 main.setLocationRelativeTo(null);
-                notes.setVisible(false);
+                note.setVisible(false);
                 shop.setVisible(false);
+                about.setVisible(false);
+                notes = new Notes();
+                notes.setBudget(0);
+                notes.load();
             }
         });
     }
