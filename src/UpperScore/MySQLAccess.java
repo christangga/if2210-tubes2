@@ -143,7 +143,7 @@ public class MySQLAccess {
             }
         }
         
-	public Produk getProduk(String nama_supermarket, Barcode id) {
+	public Produk getProduk(String nama_supermarket, Barcode id) throws USException {
 		Produk L = new Produk();
 
 		open();
@@ -156,21 +156,30 @@ public class MySQLAccess {
                         
                         //writeResultSet(resultSet);
                         //8990057408305
-                        
-                        while(resultSet.next())
-                        {  
-                            List<String> tag = new ArrayList<>();
-                            tag=Arrays.asList(resultSet.getString("tag").split(" *, *"));
-                            L.setProduk(new Produk(new Barcode(resultSet.getString("barcode")),
-					resultSet.getString("nama_produk"), resultSet
-							.getInt("harga"), tag));
+                        if(resultSet.first())
+                        {
+                            do
+                            {  
+                                List<String> tag = new ArrayList<>();
+                                tag=Arrays.asList(resultSet.getString("tag").split(" *, *"));
+                                L.setProduk(new Produk(new Barcode(resultSet.getString("barcode")),
+                                            resultSet.getString("nama_produk"), resultSet
+                                                            .getInt("harga"), tag));
+                            }while(resultSet.next());
                         }
-                        close();
+                        else
+                        {
+                            throw new USException("EXCEPTION = Product Not Found");
+                        }
                         
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+                finally
+                {
+                    close();
+                }
 		return L;
 	}
         
