@@ -2,12 +2,14 @@ package upperscoreswing;
 
 import javax.swing.table.AbstractTableModel;
 import UpperScore.*;
-import javax.swing.event.TableModelListener;
 
 public class TableData extends AbstractTableModel{
     private final String[] columnNames = {"Barcode","Nama","Quantity","Price"};
     private Object[][] data;
-    
+    private final Class[] types = new Class [] {java.lang.String.class, 
+                                                java.lang.String.class, 
+                                                java.lang.Integer.class, 
+                                                java.lang.Integer.class};
     public TableData()
     {
         data = new Object[1][4];
@@ -44,14 +46,7 @@ public class TableData extends AbstractTableModel{
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if(col==2)
-        {
-            return true;
-        }
-        else
-        {
             return false;
-        }
     }
 
     @Override
@@ -63,7 +58,7 @@ public class TableData extends AbstractTableModel{
     public void RefreshTable(Belanja belanja)
     {
         int currentRow = getRowCount();
-        data = new Object[belanja.getshoppingList().size()][4];
+        data = new Object[belanja.getshoppingList().size()+1][4];
         
         for(int i=0;i<belanja.getshoppingList().size();i++)
         {
@@ -72,10 +67,10 @@ public class TableData extends AbstractTableModel{
             setValueAt(belanja.getshoppingList().get(i).getQuantity(),i,2);
             setValueAt(belanja.getshoppingList().get(i).getHarga()*belanja.getshoppingList().get(i).getQuantity(),i,3);
         }
-        setValueAt("",getRowCount()-1,0);
-        setValueAt("",getRowCount()-1,1);
-        setValueAt(0,getRowCount()-1,2);
-        setValueAt(0,getRowCount()-1,3);
+        setValueAt("",belanja.getshoppingList().size(),0);
+        setValueAt("",belanja.getshoppingList().size(),1);
+        setValueAt(0,belanja.getshoppingList().size(),2);
+        setValueAt(0,belanja.getshoppingList().size(),3);
         fireTableRowsInserted(1, currentRow+1);
     }
 }
