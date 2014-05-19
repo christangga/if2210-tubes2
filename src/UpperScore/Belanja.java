@@ -66,8 +66,7 @@ public class Belanja
                 {
                     i++;
                 }
-            }
-            //8990057426040
+            } 
             //8990057704308
             
             //jika barcode belum ada, tambahkan ke shopping list
