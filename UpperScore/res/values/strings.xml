@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">UpperScore</string>
+	<string name="action_new">New</string>
+	<string name="action_done">Done</string>
+	<string name="action_browse">Browse</string>
+	<string name="action_item">Cart</string>
+	<string name="action_search">Search</string>
+	<string name="hello_world">Hello World!</string>
+</resources>

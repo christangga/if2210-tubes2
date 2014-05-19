@@ -1,0 +1,74 @@
+package com.example.upperscore.controller;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.List;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.upperscore.R;
+import com.example.upperscore.model.Produk;
+
+public class ProdukArrayAdapter extends ArrayAdapter<Produk> {
+
+	private final List<Produk> values;
+
+	public ProdukArrayAdapter(Context context, int resource, List<Produk> values) {
+		super(context, resource, values);
+		this.values = values;
+	}
+
+	@Override
+	public int getCount() {
+		if (values == null) {
+			return 0;
+		} else {
+			return values.size();
+		}
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		LayoutInflater inflater = LayoutInflater.from(getContext());
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.produkview_listview_item, parent, false);
+		}
+		
+		ImageView imageView = (ImageView) convertView.findViewById(R.id.produkListViewItemImageView);
+		TextView textViewName = (TextView) convertView.findViewById(R.id.produkListViewItemTextViewName);
+		TextView textViewPrice = (TextView) convertView.findViewById(R.id.produkListViewItemTextViewPrice);
+	
+		final Produk produk = values.get(position);
+		imageView.setImageResource(R.drawable.icon_green);
+		imageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// pop up dialog
+			}
+		});
+		
+		textViewName.setText(produk.getNama());
+		
+		DecimalFormat currId = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols rupiahFormat = new DecimalFormatSymbols();
+
+        rupiahFormat.setCurrencySymbol("Rp.");
+        rupiahFormat.setMonetaryDecimalSeparator(',');
+        rupiahFormat.setGroupingSeparator('.');
+
+        currId.setDecimalFormatSymbols(rupiahFormat);
+
+		textViewPrice.setText(String.valueOf(currId.format(produk.getHarga())));
+		
+		return convertView;
+	}
+
+}
